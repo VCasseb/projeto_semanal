@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
+import dotenv from 'dotenv';
+dotenv.config();
 
 interface Pedido {
   Id: string;
@@ -25,6 +27,11 @@ export default function Home() {
   const [resultado, setResultado] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const NEXT_PUBLIC_CODE_CONSULTAR = process.env.NEXT_PUBLIC_CODE_CONSULTAR;
+  const NEXT_PUBLIC_CODE_CONSULTAR_ONE = process.env.NEXT_PUBLIC_CODE_CONSULTAR_ONE;
+  const NEXT_PUBLIC_CODE_EXCLUIR = process.env.NEXT_PUBLIC_CODE_EXCLUIR;
+  const NEXT_PUBLIC_CODE_INSERIR = process.env.NEXT_PUBLIC_CODE_INSERIR;
+
   // Estados para o formulário de inserção de pedido
   const [cliente, setCliente] = useState("");
   const [email, setEmail] = useState("");
@@ -39,7 +46,7 @@ export default function Home() {
       try {
         console.log("entrou ONE CONSULTA");
         const response = await fetch(
-          `https://consultaronepedido.azurewebsites.net/api/consultaronepedido/${pedidoId}?code=ycV4rX_dli8s8gUa2Dhx-H3uQ682e8NMt_neIETY3QNDAzFuVZKnyg==`,
+          `https://consultaronepedido.azurewebsites.net/api/consultaronepedido/${pedidoId}?code=${NEXT_PUBLIC_CODE_CONSULTAR_ONE}`,
           {
             method: "POST",
             headers: {
@@ -66,7 +73,7 @@ export default function Home() {
       try {
         console.log("CONSULTA");
         const response = await fetch(
-          `https://semanal.azurewebsites.net/api/consultarpedidos?code=hhLwjuIImarTerNlkmzz1CuMSdL8qEGM8GYuKaKVfgVUAzFuB8t9LA==`
+          `https://semanal.azurewebsites.net/api/consultarpedidos?code=${NEXT_PUBLIC_CODE_CONSULTAR}`
         );
         const data: Pedido[] = await response.json();
         setResultado(data);
@@ -111,13 +118,16 @@ export default function Home() {
     // Agora você pode fazer a requisição com o objeto 'pedido'
     try {
       // Envio da requisição
-      await fetch("https://inserirpedidos.azurewebsites.net/api/inserirpedidos?code=_MWbNmCbn04zDoBRWwuwAis0tjN3mX9a2j7mJivzjHoOAzFuiYjOaw==", {
+      const response = await fetch(`https://inserirpedidos.azurewebsites.net/api/inserirpedidos?code=${NEXT_PUBLIC_CODE_INSERIR}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: pedido, // Enviar como string diretamente
       });
+      if (!response.ok) {
+        throw new Error(`Erro ao deletar pedido: ${response.statusText}`);
+      }
     } catch (error) {
       console.error("Erro ao inserir pedido:", error);
     }
@@ -129,7 +139,7 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://excluirpedido.azurewebsites.net/api/excluirpedido/${id}?code=fFqsP5qau9byWTdr7UQByEagAy4UJKzvfvz3EYigfpDYAzFuzH6IrQ==`,
+        `https://excluirpedido.azurewebsites.net/api/excluirpedido/${id}?code=${NEXT_PUBLIC_CODE_EXCLUIR}`,
         {
           method: "POST",
           headers: {
