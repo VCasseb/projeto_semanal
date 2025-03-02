@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import dotenv from 'dotenv';
-dotenv.config();
 
 interface Pedido {
   Id: string;
