@@ -30,7 +30,9 @@ export default function Home() {
   const NEXT_PUBLIC_CODE_EXCLUIR = process.env.NEXT_PUBLIC_CODE_EXCLUIR;
   const NEXT_PUBLIC_CODE_INSERIR = process.env.NEXT_PUBLIC_CODE_INSERIR;
 
-  console.log("varv",NEXT_PUBLIC_CODE_CONSULTAR);
+  const TESTE_ENV = process.env.TESTANDOENV;
+
+  console.log("varv",TESTE_ENV);
 
   // Estados para o formulário de inserção de pedido
   const [cliente, setCliente] = useState("");
