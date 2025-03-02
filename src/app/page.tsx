@@ -25,15 +25,6 @@ export default function Home() {
   const [resultado, setResultado] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const NEXT_PUBLIC_CODE_CONSULTAR = process.env.NEXT_PUBLIC_CODE_CONSULTAR;
-  const NEXT_PUBLIC_CODE_CONSULTAR_ONE = process.env.NEXT_PUBLIC_CODE_CONSULTAR_ONE;
-  const NEXT_PUBLIC_CODE_EXCLUIR = process.env.NEXT_PUBLIC_CODE_EXCLUIR;
-  const NEXT_PUBLIC_CODE_INSERIR = process.env.NEXT_PUBLIC_CODE_INSERIR;
-
-  const TESTE_ENV = process.env.TESTANDOENV;
-
-  console.log("varv",TESTE_ENV);
-
   // Estados para o formulário de inserção de pedido
   const [cliente, setCliente] = useState("");
   const [email, setEmail] = useState("");
@@ -48,7 +39,7 @@ export default function Home() {
       try {
         console.log("entrou ONE CONSULTA");
         const response = await fetch(
-          `https://consultaronepedido.azurewebsites.net/api/consultaronepedido/${pedidoId}?code=${NEXT_PUBLIC_CODE_CONSULTAR_ONE}`,
+          `https://semanal.azurewebsites.net/api/consultaronepedido/${pedidoId}?code=hhLwjuIImarTerNlkmzz1CuMSdL8qEGM8GYuKaKVfgVUAzFuB8t9LA==`,
           {
             method: "POST",
             headers: {
@@ -75,7 +66,7 @@ export default function Home() {
       try {
         console.log("CONSULTA");
         const response = await fetch(
-          `https://semanal.azurewebsites.net/api/consultarpedidos?code=${NEXT_PUBLIC_CODE_CONSULTAR}`
+          `https://semanal.azurewebsites.net/api/consultarpedidos?code=hhLwjuIImarTerNlkmzz1CuMSdL8qEGM8GYuKaKVfgVUAzFuB8t9LA==`,
         );
         const data: Pedido[] = await response.json();
         setResultado(data);
@@ -120,7 +111,7 @@ export default function Home() {
     // Agora você pode fazer a requisição com o objeto 'pedido'
     try {
       // Envio da requisição
-      const response = await fetch(`https://inserirpedidos.azurewebsites.net/api/inserirpedidos?code=${NEXT_PUBLIC_CODE_INSERIR}`, {
+      const response = await fetch(`https://semanal.azurewebsites.net/api/inserirpedidos?code=hhLwjuIImarTerNlkmzz1CuMSdL8qEGM8GYuKaKVfgVUAzFuB8t9LA==`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +132,7 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://excluirpedido.azurewebsites.net/api/excluirpedido/${id}?code=${NEXT_PUBLIC_CODE_EXCLUIR}`,
+        `https://semanal.azurewebsites.net/api/excluirpedido/${id}?code=hhLwjuIImarTerNlkmzz1CuMSdL8qEGM8GYuKaKVfgVUAzFuB8t9LA==`,
         {
           method: "POST",
           headers: {
